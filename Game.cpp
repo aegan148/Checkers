@@ -50,6 +50,11 @@ void Game::Start()
 
 			moveResult = mBoard.makeMove(newMove.first, newMove.second, direction);
 		}
+		if (moveResult == Board::MoveResult::FF) {
+			blIsSurrounder = true;
+			break;
+		}
+
 		//pars moveResult
 		if (moveResult == Board::MoveResult::SUCCESSFULL_COMBAT) {
 			//update score
@@ -58,8 +63,8 @@ void Game::Start()
 		}
 		//update last player
 		SwitchPlayer();
-
 	}
+	mIO.endGame(CastPlayer(GetWiner()));
 }
 
 bool Game::GetDirection() const
@@ -82,14 +87,42 @@ bool Game::GetDirection() const
 movePos Game::makeIO()
 {
 	system("cls");
+	mIO.printScore(writeScore, blackScore);
 	auto map = mBoard.GetMap();//print board
 	mIO.drawBoard(map);
-	auto newMove = mIO.GetMove();//ask for a move
+	auto newMove = mIO.GetMove(GetCurrenPlayer());//ask for a move
 	return std::move(newMove);
+}
+
+std::string Game::GetCurrenPlayer() const
+{
+	std::string player;
+	if (lastPlayer == Player::BLACK) {
+		player = "Black";
+	}
+	else {
+		player = "White";
+	}
+	return std::move(player);
+}
+
+std::string Game::CastPlayer(Player player) const
+{
+	std::string playerStr;
+	switch (player) {
+	case Player::WHITE :
+		playerStr = "White Player";
+		break;
+	default:
+		playerStr = "Black Player";
+		break;
+	}
+	return playerStr;
 }
 
 void Game::SwitchPlayer()
 {
+	
 	if (lastPlayer == Player::WHITE) {
 		lastPlayer = Player::BLACK;
 	}

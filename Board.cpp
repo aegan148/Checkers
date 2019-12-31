@@ -58,7 +58,7 @@ Board::MoveResult Board::makeMove(const pos& startPos, const pos& endPos, bool d
 		break;
 	}
 	
-	return MoveResult();
+	return moveResult;
 }
 
 Board::MoveResult Board::checkMove(const pos& startPos, const pos& endPos, bool direction)
@@ -68,7 +68,12 @@ Board::MoveResult Board::checkMove(const pos& startPos, const pos& endPos, bool 
 	const int dX = endPos.second - startPos.second;
 	bool is_Combat = false;
 
-	if (endPos.first >= 0 && endPos.first < BoardSize && endPos.second >= 0 && endPos.second < BoardSize) {
+	if (dX == 0 && dY == 0 && endPos.first == 0 && endPos.second == 0) {
+		result = Board::MoveResult::FF;
+		
+	} 
+
+	else if (endPos.first >= 0 && endPos.first < BoardSize && endPos.second >= 0 && endPos.second < BoardSize) {
 		auto targetCellState = mCells.at(endPos).GetState();
 		
 		if (targetCellState == Cell::State::Empty) {

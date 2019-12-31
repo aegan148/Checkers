@@ -16,6 +16,8 @@ private:
 	movePos makeIO();
 	size_t writeScore;
 	size_t blackScore;
+	std::string GetCurrenPlayer() const;
+	std::string CastPlayer(Player player) const;
 	void SwitchPlayer();
 	void UpdateScore();
 	Player lastPlayer;

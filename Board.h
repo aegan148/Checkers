@@ -9,7 +9,7 @@ class Board
 public:
 	Board();
 	~Board();
-	enum class MoveResult {SUCCEFULL_MOVE, SUCCESSFULL_COMBAT, PROHIBITED};
+	enum class MoveResult {FF,SUCCEFULL_MOVE, SUCCESSFULL_COMBAT, PROHIBITED};
 	void ResetMap();
 	MoveResult makeMove(const pos& startPos, const pos& endPos, bool direction, bool forceCombat=false);
 	const map& GetMap() const { return mCells; }
